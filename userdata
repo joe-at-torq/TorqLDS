@@ -3,8 +3,13 @@
 sudo apt update
 sudo apt install -y python python3-pip net-tools tree python3-flask
 
+#Gather Instance Data
+UI_IP=$(curl https://ipinfo.io/ip)
+UI_PORT="8080"
+JSON="{\"ip\":\"${UI_IP}\",\"port\":\"${UI_PORT}\"}"
+
 #Notify Torq
-curl -d '{"instance_state":"online"}' -H 'Content-Type: application/json' https://hooks.torq.io/v1/webhooks/22f129f2-d7dc-474e-aabe-da2d1d9893bd
+curl -d "${JSON}" -H 'Content-Type: application/json' https://hooks.torq.io/v1/webhooks/22f129f2-d7dc-474e-aabe-da2d1d9893bd
 
 #Run App
 cd /home/ubuntu
