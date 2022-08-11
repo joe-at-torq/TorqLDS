@@ -7,3 +7,6 @@ sudo apt install -y python python3-pip net-tools tree python3-flask
 git clone https://github.com/joe-at-torq/TorqLDS-UI.git
 cd TorqLDS-UI/reg-form/
 screen ./StartPublic.sh
+
+#Notify Torq
+curl -d '{"instance_state":"online"}' -H 'Content-Type: application/json' https://hooks.torq.io/v1/webhooks/22f129f2-d7dc-474e-aabe-da2d1d9893bd
