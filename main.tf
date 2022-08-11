@@ -92,6 +92,7 @@ resource "azurerm_virtual_machine" "ubuntuserver_2004_vm" {
     computer_name  = "UbuntuServer"
     admin_username = "ubuntu"
     admin_password = "1qaz!QAZ1qaz!QAZ"
+    custom_data    = "${data.template_file.userdata.rendered}"
   }
   
     os_profile_linux_config {
