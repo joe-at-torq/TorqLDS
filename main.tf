@@ -64,6 +64,18 @@ resource "azurerm_network_interface" "cgc_windows_client_nic" {
     }
 }
 
+#UserData Template
+data "template_file" "userdata" {
+  template = "${file("userdata")}"
+
+}
+
+#Render Userdata Template
+resource "local_file" "cpgw1_userdata_rendered" {
+    content     = "${data.template_file.userdata.rendered}"
+    filename = "userdata_rendered.sh"
+}
+
 #Windows Client
 resource "azurerm_virtual_machine" "ubuntuserver_2004_vm" {
   name                  = "UbuntuServer20.04"
@@ -92,8 +104,7 @@ resource "azurerm_virtual_machine" "ubuntuserver_2004_vm" {
     computer_name  = "UbuntuServer"
     admin_username = "ubuntu"
     admin_password = "1qaz!QAZ1qaz!QAZ"
-    #custom_data   = "${data.template_file.userdata.rendered}"
-    custom_data    = "${file("userdata")}"
+    custom_data    = "${data.template_file.userdata.rendered}"
   }
   
     os_profile_linux_config {
