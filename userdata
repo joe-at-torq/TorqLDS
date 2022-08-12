@@ -11,9 +11,6 @@ UI_OWNER="${deployment_owner}"
 UI_WEBHOOK="{deployment_webhook}"
 JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
 
-#Write LDS Instance Data
-echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/lds_settings
-
 #Notify Torq
 curl -d "$JSON" -H 'Content-Type: application/json' https://hooks.torq.io/v1/webhooks/22f129f2-d7dc-474e-aabe-da2d1d9893bd
 
@@ -22,7 +19,7 @@ cd /home/ubuntu
 git clone https://github.com/joe-at-torq/TorqLDS-UI.git
 
 #Write LDS Instance Data
-echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/lds_settings/TorqLDS-UI/reg-form/lds_settings.json
+echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/TorqLDS-UI/reg-form/lds_settings.json
 
 #Start the UI
 cd TorqLDS-UI/reg-form/
