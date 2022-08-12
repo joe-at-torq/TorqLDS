@@ -8,7 +8,7 @@ UI_IP=$(curl https://ipinfo.io/ip)
 UI_PORT="8080"
 UI_UUID="${deployment_uuid}"
 UI_OWNER="${deployment_owner}"
-JSON="{\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
+JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
 
 #Write LDS Instance Data
 echo "owner=${deployment_owner}" > /home/ubuntu/lds_settings
