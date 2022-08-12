@@ -33,3 +33,9 @@ variable "deployment_uuid" {
   default  = ""
 }
 
+variable "deployment_webhook" {
+  type = string
+  default  = ""
+}
+
+
