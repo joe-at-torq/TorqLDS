@@ -17,3 +17,19 @@ variable "subscription_id" {
   type = string
   default  = ""
 }
+
+variable "deployment_region" {
+  type = string
+  default  = "eastus"
+}
+
+variable "deployment_owner" {
+  type = string
+  default  = ""
+}
+
+variable "deployment_uuid" {
+  type = string
+  default  = ""
+}
+

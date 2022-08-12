@@ -13,15 +13,10 @@ provider "azurerm" {
 #Deployment Variables
 #----------------------------------------------------------------------------------
 
-variable "client_side_region" {
-  type = string
-  default  = "eastus"
-}
-
 #Resouce Group
 resource "azurerm_resource_group" "client_rg" {
-  name     = "Torq_LDS_UI"
-  location = var.client_side_region
+  name     = "Torq_LDS_UI_${var.deployment_uuid}"
+  location = var.deployment_region
 }
 
 #Network
@@ -67,6 +62,12 @@ resource "azurerm_network_interface" "cgc_windows_client_nic" {
 #UserData Template
 data "template_file" "userdata" {
   template = "${file("userdata")}"
+  vars = {
+    deployment_owner = "${var.deployment_owner}"
+    deployment_uuid = "${var.deployment_uuid}"
+
+
+    }
 
 }
 
@@ -113,5 +114,6 @@ resource "azurerm_virtual_machine" "ubuntuserver_2004_vm" {
 
   tags = {
     environment = "torq-lds"
+    owner = "${var.deployment_owner}"
   }
 }
