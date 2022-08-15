@@ -45,11 +45,6 @@ resource "azurerm_subnet" "client_rg_user_subnet" {
   resource_group_name  = azurerm_resource_group.client_rg.name
   virtual_network_name = azurerm_virtual_network.client_rg_network.name
   address_prefixes       = ["10.0.10.0/24"]
-
-  tags = {
-    environment = "torq-lds"
-    owner = "${var.deployment_owner}"
-  }
 }
 
 #Public Ip
