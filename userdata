@@ -8,11 +8,11 @@ UI_IP=$(curl https://ipinfo.io/ip)
 UI_PORT="8080"
 UI_UUID="${deployment_uuid}"
 UI_OWNER="${deployment_owner}"
-UI_WEBHOOK="{deployment_webhook}"
+UI_WEBHOOK="${deployment_webhook}"
 JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
 
 #Notify Torq
-curl -d "$JSON" -H 'Content-Type: application/json' https://hooks.torq.io/v1/webhooks/22f129f2-d7dc-474e-aabe-da2d1d9893bd
+curl -d "$JSON" -H 'Content-Type: application/json' $UI_WEBHOOK
 
 #Run App
 cd /home/ubuntu
