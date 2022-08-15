@@ -9,7 +9,7 @@ UI_PORT="8080"
 UI_UUID="${deployment_uuid}"
 UI_OWNER="${deployment_owner}"
 UI_WEBHOOK="${deployment_webhook}"
-JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
+JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"deployment_owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
 
 #Notify Torq
 curl -d "$JSON" -H 'Content-Type: application/json' $UI_WEBHOOK
