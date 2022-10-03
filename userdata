@@ -27,8 +27,8 @@ echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webho
 snap install --classic certbot
 ln -s /snap/bin/certbot /usr/bin/certbot
 certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d $UI_NAME.torq.training
-cp /etc/letsencrypt/live/${UI_NAME}.torq.training/fullchain.pem TorqLDS-UI/reg-form/cert.pem
-cp /etc/letsencrypt/live/${UI_NAME}.torq.training/privkey.pem TorqLDS-UI/reg-form/key.pem
+cp /etc/letsencrypt/live/$UI_NAME.torq.training/fullchain.pem TorqLDS-UI/reg-form/cert.pem
+cp /etc/letsencrypt/live/$UI_NAME.torq.training/privkey.pem TorqLDS-UI/reg-form/key.pem
 
 #Generate the SSL Certificate and start the UI
 cd TorqLDS-UI/reg-form/
