@@ -25,15 +25,40 @@ git clone https://github.com/joe-at-torq/TorqLDS-UI.git
 #Write LDS Instance Data
 echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/TorqLDS-UI/reg-form/lds_settings.json
 
-#Generate SSL Certificate with Certbot and Lets Encrypt
+
+
+#Generate SSL Certificate with Certbot and Lets Encrypt (Try up to 5 times to configure)
 snap install --classic certbot
 ln -s /snap/bin/certbot /usr/bin/certbot
-certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d $UI_NAME.torq.training
-cp /etc/letsencrypt/live/$UI_NAME.torq.training/fullchain.pem TorqLDS-UI/reg-form/cert.pem
-cp /etc/letsencrypt/live/$UI_NAME.torq.training/privkey.pem TorqLDS-UI/reg-form/key.pem
+FALLBACK="true"
+COUNT=0
+while [ $COUNT -le 5 ];
+do
+    #certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d $UI_NAME.torq.training
+    FILE="/etc/letsencrypt/live/$UI_NAME.torq.training/fullchain.pem"
 
-#Generate the SSL Certificate and start the UI
+    if [ -f "$FILE" ]; then
+        cp /etc/letsencrypt/live/$UI_NAME.torq.training/fullchain.pem TorqLDS-UI/reg-form/cert.pem
+        cp /etc/letsencrypt/live/$UI_NAME.torq.training/privkey.pem TorqLDS-UI/reg-form/key.pem
+        FALLBACK="false"
+        break
+    fi
+
+    sleep 10s
+    (( COUNT++ ))
+done
+
+
+#If certbot was unable to sign ssl certificate, generate a selfsigned certificate.
+if [ "$FALLBACK" == "true" ];
+then
+    cd TorqLDS-UI/reg-form/
+    openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=Texas/L=Dallas/O=torq/OU=training/CN=*.torq.training"
+    cd -
+fi
+
+
+#Start UI
 cd TorqLDS-UI/reg-form/
-#openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=Texas/L=Dallas/O=torq/OU=training/CN=*.torq.training"
 nohup ./StartPublic.sh &
 
