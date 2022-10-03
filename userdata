@@ -35,7 +35,7 @@ FALLBACK="true"
 COUNT=0
 while [ $COUNT -le 5 ];
 do
-    #certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d $UI_NAME.torq.training
+    certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d $UI_NAME.torq.training
     FILE="/etc/letsencrypt/live/$UI_NAME.torq.training/fullchain.pem"
 
     if [ -f "$FILE" ]; then
