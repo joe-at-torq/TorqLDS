@@ -87,6 +87,7 @@ data "template_file" "userdata" {
     deployment_owner = "${var.deployment_owner}"
     deployment_uuid = "${var.deployment_uuid}"
     deployment_webhook = "${var.deployment_webhook}"
+    deployment_name = "${var.deployment_name}"
 
     }
 
