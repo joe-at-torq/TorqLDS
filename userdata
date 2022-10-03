@@ -9,6 +9,7 @@ UI_PORT="443"
 UI_UUID="${deployment_uuid}"
 UI_OWNER="${deployment_owner}"
 UI_WEBHOOK="${deployment_webhook}"
+UI_NAME="${deployment_name}"
 JSON="{\"notification_type\":\"new_ui_deployed\",\"ip\":\"$UI_IP\",\"port\":\"$UI_PORT\",\"deployment_owner\":\"$UI_OWNER\",\"uuid\":\"$UI_UUID\"}"
 
 #Notify Torq
@@ -21,8 +22,16 @@ git clone https://github.com/joe-at-torq/TorqLDS-UI.git
 #Write LDS Instance Data
 echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/TorqLDS-UI/reg-form/lds_settings.json
 
+#Generate SSL Certificate with Certbot and Lets Encrypt
+
+snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
+certbot certonly --standalone --non-interactive --agree-tos -m training@torqeng.dev -d ${UI_NAME}.torq.training
+cp /etc/letsencrypt/live/${UI_NAME}.torq.training/fullchain.pem TorqLDS-UI/reg-form/cert.pem
+cp /etc/letsencrypt/live/${UI_NAME}.torq.training/privkey.pem TorqLDS-UI/reg-form/key.pem
+
 #Generate the SSL Certificate and start the UI
 cd TorqLDS-UI/reg-form/
-openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=Texas/L=Dallas/O=torq/OU=training/CN=*.torq.training"
+#openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=Texas/L=Dallas/O=torq/OU=training/CN=*.torq.training"
 nohup ./StartPublic.sh &
 
