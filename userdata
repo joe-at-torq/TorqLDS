@@ -21,7 +21,8 @@ git clone https://github.com/joe-at-torq/TorqLDS-UI.git
 #Write LDS Instance Data
 echo "{\"owner\":\"${deployment_owner}\",\"uuid\":\"${deployment_uuid}\",\"webhook\":\"${deployment_webhook}\"}" > /home/ubuntu/TorqLDS-UI/reg-form/lds_settings.json
 
-#Start the UI
+#Generate the SSL Certificate and start the UI
 cd TorqLDS-UI/reg-form/
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=Texas/L=Dallas/O=torq/OU=training/CN=*.torq.training"
 nohup ./StartPublic.sh &
 
