@@ -38,4 +38,7 @@ variable "deployment_webhook" {
   default  = ""
 }
 
-
+variable "deployment_name" {
+  type = string
+  default  = ""
+}
